@@ -10,6 +10,7 @@ services:
     volumes:
       - prometheus_data:/prometheus
       - ./config/prometheus.yml/:/etc/prometheus/prometheus.yml
+      - ./config/alerts.yml:/etc/prometheus/alerts.yml
     command:
       - "--storage.tsdb.retention.time=30d"
       - "--config.file=/etc/prometheus/prometheus.yml"
