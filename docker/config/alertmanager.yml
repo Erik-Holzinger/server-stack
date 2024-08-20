@@ -1,12 +1,12 @@
 global:
-  resolve_timeout: 5m
+  resolve_timeout: 5m # How long to wait for an alert that stopped firing to be seen as resolved
 
 route:
   receiver: 'default'
-  group_by: ['alertname']
-  group_wait: 30s
-  group_interval: 5m
-  repeat_interval: 1h
+  group_by: ['alertname'] # Every alert is grouped by its own name
+  group_wait: 30s # How long to initially wait to send a notification for a group of alerts
+  group_interval: 5m # How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent
+  repeat_interval: 4h # How long to wait before sending a notification again if it has already been sent successfully for an alert
 
 receivers:
   - name: 'default'
