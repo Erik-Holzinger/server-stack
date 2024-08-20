@@ -75,7 +75,7 @@ services:
     restart: unless-stopped
     volumes:
       - /var/log:/var/log
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./config/promtail.yml:/etc/promtail/promtail-config.yml
     command: -config.file=/etc/promtail/promtail-config.yml
     networks:
