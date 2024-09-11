@@ -1,0 +1,41 @@
+---
+api:
+  dashboard: true
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+log:
+  level: 'INFO'
+  filePath: '/var/log/traefik/traefik.log'
+accessLog:
+  filePath: '/var/log/traefik/access.log'
+  bufferingSize: 100
+metrics:
+  prometheus:
+    addRoutersLabels: true
+entryPoints:
+  web:
+    address: ':80'
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: ':443'
+providers:
+  docker:
+    endpoint: 'unix:///var/run/docker.sock'
+    exposedByDefault: false
+    network: proxy
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: true
+certificatesResolvers:
+  dnsresolver:
+    acme:
+      email: foo@bar.example
+      storage: /etc/traefik/acme.json
+      dnsChallenge:
+        provider: netcup
+        delayBeforeCheck: 900 # 15 minutes
