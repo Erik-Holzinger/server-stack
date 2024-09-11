@@ -12,8 +12,8 @@ services:
       - xwiki_db:/var/lib/postgresql/data
 
   xwiki:
-    image: xwiki:s16
-    container_name: xwiki:stable-postgres
+    image: xwiki:stable-postgres
+    container_name: xwiki
     restart: unless-stopped
     depends_on:
       - xwiki-db
