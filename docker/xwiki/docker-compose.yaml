@@ -1,0 +1,54 @@
+services:
+  xwiki-db:
+    image: postgres:16
+    container_name: xwiki-db
+    hostname: xwikidb
+    restart: unless-stopped
+    networks:
+      - xwiki
+    env_file:
+      - .env
+    volumes:
+      - xwiki_db:/var/lib/postgresql/data
+
+  xwiki:
+    image: xwiki:s16
+    container_name: xwiki:stable-postgres
+    restart: unless-stopped
+    depends_on:
+      - xwiki-db
+    networks:
+      - xwiki
+      - proxy
+    env_file:
+      - .env
+    volumes:
+      - xwiki_db:/var/lib/postgresql/data
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.whoami.rule=Host(`wiki.change.me`)'
+      - 'traefik.http.routers.whoami.entrypoints=websecure'
+      - 'traefik.http.routers.whoami.tls=true'
+      - 'traefik.http.routers.whoami.tls.certresolver=dnsresolver'
+      - 'traefik.http.routers.whoami.middlewares=default@file'
+      - 'traefik.http.services.whoami.loadbalancer.server.port=8080'
+
+volumes:
+  xwiki_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${XWIKI_DB_DIRECTORY:-./db}
+  xwiki_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${XWIKI_DATA_DIRECTORY:-./data}
+
+networks:
+  proxy:
+    external: true
+  xwiki:
+    name: xwiki
