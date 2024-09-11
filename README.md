@@ -1,3 +1,9 @@
+<p align="center">
+    <picture>
+         <img src="docs/img/logo.png" alt="logo">
+    </picture>
+</p>
+
 # server-stack
 Service stack, containing useful features for operating a home server.
 
