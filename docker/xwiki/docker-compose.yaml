@@ -26,12 +26,12 @@ services:
       - xwiki_db:/var/lib/postgresql/data
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.whoami.rule=Host(`wiki.change.me`)'
-      - 'traefik.http.routers.whoami.entrypoints=websecure'
-      - 'traefik.http.routers.whoami.tls=true'
-      - 'traefik.http.routers.whoami.tls.certresolver=dnsresolver'
-      - 'traefik.http.routers.whoami.middlewares=default@file'
-      - 'traefik.http.services.whoami.loadbalancer.server.port=8080'
+      - 'traefik.http.routers.xwiki.rule=Host(`wiki.change.me`)'
+      - 'traefik.http.routers.xwiki.entrypoints=websecure'
+      - 'traefik.http.routers.xwiki.tls=true'
+      - 'traefik.http.routers.xwiki.tls.certresolver=dnsresolver'
+      - 'traefik.http.routers.xwiki.middlewares=default@file'
+      - 'traefik.http.services.xwiki.loadbalancer.server.port=8080'
 
 volumes:
   xwiki_db:
