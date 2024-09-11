@@ -34,6 +34,8 @@ providers:
 certificatesResolvers:
   dnsresolver:
     acme:
+      # ⚠️ IMPORTANT: comment line below for production certificates
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       email: foo@bar.example
       storage: /etc/traefik/acme.json
       dnsChallenge:

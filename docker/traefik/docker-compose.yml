@@ -1,11 +1,3 @@
-secrets:
-  netcup_customer_number:
-    file: ${NETCUP_CUSTOMER_NUMBER_SECRET_PATH:-./secrets/netcup_customer_number.secret}
-  netcup_api_key:
-    file: ${NETCUP_API_KEY_SECRET_PATH:-./secrets/netcup_api_key.secret}
-  netcup_api_password:
-    file: ${NETCUP_API_PASSWORD_SECRET_PATH:-./secrets/netcup_api_password.secret}
-
 services:
   traefik:
     image: 'traefik:v3.1'
@@ -24,12 +16,14 @@ services:
     networks:
       proxy:
         ipv4_address: 172.30.255.254
+    env_file:
+      - .env
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik_logs:/var/log/traefik/
-      - ./config/traefik.yaml:/etc/traefik/traefik.yaml:ro
-      - ./config/dynamic.yaml:/etc/traefik/dynamic.yaml:ro
+      - ./config/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./config/dynamic.yml:/etc/traefik/dynamic.yml:ro
       - ./config/acme.json:/etc/traefik/acme.json
     labels:
       - 'traefik.enable=true'

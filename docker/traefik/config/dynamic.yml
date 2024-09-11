@@ -20,16 +20,16 @@ http:
       chain:
         middlewares:
           - autodetect
-          - security
+          - security-headers
           - gzip
     auth:
       basicAuth:
         users:
-          # admin:admin; must be changed for production
+          # ⚠️ IMPORTANT: admin:admin; change line below for production
           - "admin:$2y$05$e2W8.2nm3ih5wCk3/r1HM.hW7vllJa14R1/hc60TUCycwiWUPsRYy"
     autodetect:
       contentType: { }
-    secHeaders:
+    security-headers:
       headers:
         browserXssFilter: true
         contentTypeNosniff: true

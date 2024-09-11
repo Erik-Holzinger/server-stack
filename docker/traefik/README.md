@@ -11,18 +11,21 @@ If required, changes must be made in the `config/traefik.yml` and the `docker-co
 Please specify the correct E-Mail for the certificate registration inside the `config/traefik.yml` file.
 Depending on your provider and challenge type, multiple changes are required, see [Attention](#attention).
 
-### 2. Adjust environment variables
-Copy and rename the `example.env` to `.env` and adjust the variables inside this file.
-
-### 3. Adjust router rules
-Replace the router rules for the traefik dashboard and the whoami service in the `docker-compose.yml` file.
-
-### 4. Change password for dashboard authentication
+### 2. Change password for dashboard authentication
 Change the password for the admin user of the traefik dashboard in the `config/dynamic.yml` file.
 As the [traefik documentation](https://doc.traefik.io/traefik/middlewares/http/basicauth/) describes, htpasswd must be used to create the password string.
 IMO the easiest way to do it is using [htpasswd docker container](https://github.com/xmartlabs/docker-htpasswd).
 
-### 5. (Optional) Add external services
+### 3. Adjust environment variables
+Copy and rename the `example.env` to `.env` and adjust the variables inside this file.
+
+### 4. Adjust router rules
+Replace the router rules for the traefik dashboard and the whoami service in the `docker-compose.yml` file.
+
+### 5. (Optional) Switch to production certificates
+Comment the line for disabling the staging CA in the
+
+### 6. (Optional) Add external services
 External services can be added in the `config/dynamic.yml` file as seen in the example below:
 ```
 http:
