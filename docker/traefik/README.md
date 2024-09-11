@@ -19,13 +19,17 @@ IMO the easiest way to do it is using [htpasswd docker container](https://github
 ### 3. Adjust environment variables
 Copy and rename the `example.env` to `.env` and adjust the variables inside this file.
 
-### 4. Adjust router rules
+### 4. Create folder and files
+Create the folder configured in the `.env` file for traefik's logs using `mkdir logs`.
+Create the `acme.json` file using `touch config/acme.json` and adjust the permission using `chmod 600 config/acme.json` 
+
+### 5. Adjust router rules
 Replace the router rules for the traefik dashboard and the whoami service in the `docker-compose.yml` file.
 
-### 5. (Optional) Switch to production certificates
+### 6. (Optional) Switch to production certificates
 Comment the line for disabling the staging CA in the
 
-### 6. (Optional) Add external services
+### 7. (Optional) Add external services
 External services can be added in the `config/dynamic.yml` file as seen in the example below:
 ```
 http:
