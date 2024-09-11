@@ -55,6 +55,7 @@ volumes:
 
 networks:
   proxy:
+    name: proxy
     driver: bridge
     ipam:
       config:
