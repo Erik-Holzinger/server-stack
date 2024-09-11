@@ -5,10 +5,6 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    secrets:
-      - 'netcup_customer_number'
-      - 'netcup_api_key'
-      - 'netcup_api_password'
     ports:
       - '80:80'
       - '443:443'
