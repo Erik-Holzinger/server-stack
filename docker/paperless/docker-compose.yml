@@ -1,0 +1,92 @@
+services:
+  paperless-db:
+    image: postgres:16
+    container_name: paperless-ngx-db
+    restart: unless-stopped
+    networks:
+      - paperless
+    env_file:
+      - .env
+    volumes:
+      - paperless_db:/var/lib/postgresql/data
+
+  paperless-redis:
+    image: redis:7
+    container_name: paperless-ngx-redis
+    restart: unless-stopped
+    networks:
+      - paperless
+    env_file:
+      - .env
+    volumes:
+      - paperless_redis:/data
+
+  paperless-ngx:
+    image: paperlessngx/paperless-ngx:2.12
+    container_name: paperless-ngx-web
+    restart: unless-stopped
+    depends_on:
+      - paperless-db
+      - paperless-redis
+    networks:
+      - paperless
+      - proxy
+    env_file:
+      - .env
+    volumes:
+      - paperless_consume:/usr/src/paperless/consume
+      - paperless_data:/usr/src/paperless/data
+      - paperless_export:/usr/src/paperless/export
+      - paperless_media:/usr/src/paperless/media
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.paperless.rule=Host(`paperless.change.me`)'
+      - 'traefik.http.routers.paperless.entrypoints=websecure'
+      - 'traefik.http.routers.paperless.tls=true'
+      - 'traefik.http.routers.paperless.tls.certresolver=dnsresolver'
+      - 'traefik.http.routers.paperless.middlewares=default@file'
+      - 'traefik.http.services.paperless.loadbalancer.server.port=8000'
+    
+volumes:
+  paperless_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PAPERLESS_DB_DIRECTORY:-./db}
+  paperless_redis:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PAPERLESS_REDIS_DIRECTORY:-./redis}
+  paperless_consume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PAPERLESS_CONSUME_DIRECTORY:-./consume}
+  paperless_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PAPERLESS_DATA_DIRECTORY:-./data}
+  paperless_export:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PAPERLESS_EXPORT_DIRECTORY:-./export}
+  paperless_media:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PAPERLESS_MEDIA_DIRECTORY:-./media}
+
+networks:
+  proxy:
+    external: true
+  paperless:
+    name: paperless
