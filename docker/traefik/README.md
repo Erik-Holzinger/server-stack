@@ -17,8 +17,8 @@ As the [Traefik documentation](https://doc.traefik.io/traefik/middlewares/http/b
 IMO the easiest way to do it is using [htpasswd docker container](https://github.com/xmartlabs/docker-htpasswd).
 
 ### 3. Adjust environment variables
-Copy and rename the `example.env` to `.env` and adjust the variables inside this file.
-Use `chmod 600 .env` afterwards.
+Copy and rename the `example.env` to `../../configuration/traefik/.env` and adjust the variables inside this file.
+Use `chmod 600 ../../configuration/traefik/.env` afterwards.
 
 ### 4. Create folder and files
 Create the folder configured in the `.env` file for Traefik's logs using `mkdir logs`.
