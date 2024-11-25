@@ -22,7 +22,7 @@ services:
       - paperless_redis:/data
 
   paperless-ngx:
-    image: paperlessngx/paperless-ngx:2.12
+    image: paperlessngx/paperless-ngx:2.13
     container_name: paperless-ngx-web
     restart: unless-stopped
     depends_on:

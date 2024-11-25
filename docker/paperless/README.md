@@ -1,4 +1,4 @@
-# Xwiki
+# Paperless
 
 ## Configuration
 
@@ -12,4 +12,4 @@ This secret key is used to generate the session keys.
 Create the folders configured in the `.env` file for using `mkdir db redis consume data export media`.
 
 ### 3. Adjust router rule
-Replace the router rules for Xwiki in the `docker-compose.yml` file.
+Replace the router rules for paperless in the `docker-compose.yml` file.
