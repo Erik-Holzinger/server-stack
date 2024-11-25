@@ -1,0 +1,31 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1.23.15
+    container_name: uptime-kuma
+    restart: unless-stopped
+    networks:
+      - proxy
+    env_file:
+      - .env
+    volumes:
+      - uptime-kuma_data:/app/data
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.uptime-kuma.rule=Host(`uptime-kuma.change.me`)'
+      - 'traefik.http.routers.uptime-kuma_data.entrypoints=websecure'
+      - 'traefik.http.routers.uptime-kuma_data.tls=true'
+      - 'traefik.http.routers.uptime-kuma_data.tls.certresolver=dnsresolver'
+      - 'traefik.http.routers.uptime-kuma_data.middlewares=default@file'
+      - 'traefik.http.services.uptime-kuma_data.loadbalancer.server.port=3001'
+
+volumes:
+  uptime-kuma_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${UPTIME_KUMA_DATA_DIRECTORY:-./data}
+
+networks:
+  proxy:
+    external: true
