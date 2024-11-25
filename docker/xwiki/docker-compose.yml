@@ -1,6 +1,6 @@
 services:
   xwiki-db:
-    image: postgres:16
+    image: postgres:17.2
     container_name: xwiki-db
     hostname: xwikidb
     restart: unless-stopped
@@ -12,7 +12,7 @@ services:
       - xwiki_db:/var/lib/postgresql/data
 
   xwiki:
-    image: xwiki:stable-postgres
+    image: xwiki:16.9-postgres-tomcat
     container_name: xwiki
     restart: unless-stopped
     depends_on:
@@ -21,12 +21,12 @@ services:
       - xwiki
       - proxy
     env_file:
-      - .env
+      - ../../configuration/xwiki/.env
     volumes:
       - xwiki_data:/usr/local/xwiki
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.xwiki.rule=Host(`wiki.change.me`)'
+      - 'traefik.http.routers.xwiki.rule=Host(`${XWIKI_URL}`)'
       - 'traefik.http.routers.xwiki.entrypoints=websecure'
       - 'traefik.http.routers.xwiki.tls=true'
       - 'traefik.http.routers.xwiki.tls.certresolver=dnsresolver'
