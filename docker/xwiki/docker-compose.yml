@@ -7,7 +7,7 @@ services:
     networks:
       - xwiki
     env_file:
-      - .env
+      - ../../configuration/xwiki/.env
     volumes:
       - xwiki_db:/var/lib/postgresql/data
 
