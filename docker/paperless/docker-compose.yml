@@ -1,12 +1,12 @@
 services:
   paperless-db:
-    image: postgres:16
+    image: postgres:17.2
     container_name: paperless-ngx-db
     restart: unless-stopped
     networks:
       - paperless
     env_file:
-      - .env
+      - ../../configuration/paperless/.env
     volumes:
       - paperless_db:/var/lib/postgresql/data
 
@@ -17,7 +17,7 @@ services:
     networks:
       - paperless
     env_file:
-      - .env
+      - ../../configuration/paperless/.env
     volumes:
       - paperless_redis:/data
 
@@ -32,7 +32,7 @@ services:
       - paperless
       - proxy
     env_file:
-      - .env
+      - ../../configuration/paperless/.env
     volumes:
       - paperless_consume:/usr/src/paperless/consume
       - paperless_data:/usr/src/paperless/data
@@ -40,7 +40,7 @@ services:
       - paperless_media:/usr/src/paperless/media
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.paperless.rule=Host(`paperless.change.me`)'
+      - 'traefik.http.routers.paperless.rule=Host(`${PAPERLESS_TRAEFIK_HOST}`)'
       - 'traefik.http.routers.paperless.entrypoints=websecure'
       - 'traefik.http.routers.paperless.tls=true'
       - 'traefik.http.routers.paperless.tls.certresolver=dnsresolver'

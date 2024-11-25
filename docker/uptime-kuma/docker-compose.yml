@@ -11,7 +11,7 @@ services:
       - uptime-kuma_data:/app/data
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.uptime-kuma.rule=Host(`${UPTIME_KUMA_URL}`)'
+      - 'traefik.http.routers.uptime-kuma.rule=Host(`${UPTIME_KUMA_TRAEFIK_HOST}`)'
       - 'traefik.http.routers.uptime-kuma.entrypoints=websecure'
       - 'traefik.http.routers.uptime-kuma.tls=true'
       - 'traefik.http.routers.uptime-kuma.tls.certresolver=dnsresolver'

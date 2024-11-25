@@ -26,7 +26,7 @@ services:
       - xwiki_data:/usr/local/xwiki
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.xwiki.rule=Host(`${XWIKI_URL}`)'
+      - 'traefik.http.routers.xwiki.rule=Host(`${XWIKI_TRAEFIK_HOST}`)'
       - 'traefik.http.routers.xwiki.entrypoints=websecure'
       - 'traefik.http.routers.xwiki.tls=true'
       - 'traefik.http.routers.xwiki.tls.certresolver=dnsresolver'
